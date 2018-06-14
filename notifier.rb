@@ -4,6 +4,11 @@ require_relative 'lib/database'
 
 #TODO Harcode value defined in Chile's Hour
 OFFSET = (60 * 60 * 4)
+
+# Get notifications 12 hours before that match
+TIMER_NOTIFICATION = (60 * 60 * 12)
+
+# Custom url hook to send notification
 SLACK_HOOK = ''
 
 @database = Database.new
@@ -15,8 +20,9 @@ matches.each do |match|
   date_match = Time.at(match[0]).utc - OFFSET
   date_now = Time.now.utc - OFFSET
 
-  if Date.today.to_s == date_match.strftime("%Y-%m-%d") && date_now < date_match
-    value = "#{match[1]} #{match[2]}  VS #{match[3]} #{match[4]}   #{date_match.strftime("%Y-%m-%d %H:%M")}"
+  value = "#{match[1]} #{match[2]}  VS #{match[3]} #{match[4]}   #{date_match.strftime("%Y-%m-%d %H:%M")}"
+
+  if date_now.strftime("%Y-%m-%d %H") == (date_match - TIMER_NOTIFICATION).strftime("%Y-%m-%d %H")
     notifier = Slack::Notifier.new(SLACK_HOOK)
     notifier.ping(value)
   end

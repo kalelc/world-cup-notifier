@@ -23,6 +23,7 @@ matches.each do |match|
   value = "#{match[1]} #{match[2]}  VS #{match[3]} #{match[4]}   #{date_match.strftime("%Y-%m-%d %H:%M")}"
 
   if date_now.strftime("%Y-%m-%d %H") == (date_match - TIMER_NOTIFICATION).strftime("%Y-%m-%d %H")
+    open('log/notifications.log', 'w') { |f| f << "#{Time.now} -> #{value}" }
     notifier = Slack::Notifier.new(SLACK_HOOK)
     notifier.ping(value)
   end

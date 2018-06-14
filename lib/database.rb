@@ -11,6 +11,7 @@ class Database
   def migrate
     team
     match
+    indexes
   end
 
   def team

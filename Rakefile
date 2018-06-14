@@ -1,5 +1,5 @@
-require_relative 'database'
-require_relative 'import'
+require_relative 'lib/database'
+require_relative 'lib/import'
 
 task :default do
 end

@@ -21,7 +21,6 @@ class Import
     end
   end
 
-  #row = @database.db.execute("select * from teams where id in(#{match['home_team']}, #{match['away_team']})")
 
   def matches
     @json['groups'].each do |groups|
